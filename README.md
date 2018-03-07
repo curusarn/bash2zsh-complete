@@ -6,7 +6,7 @@
 ### Variables
 *zsh variable -> bash variable (additional notes)*
 
-$CURRENT -> $COMP_CWORD 
-$words -> $COMP_WORDS
-$line -> $COMP_LINE
+$CURRENT -> $COMP_CWORD   
+$words -> $COMP_WORDS  
+$line -> $COMP_LINE  
 
