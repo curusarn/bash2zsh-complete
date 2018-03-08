@@ -21,12 +21,20 @@ func check(e error) {
     }
 }
 
+func GetIndent(original_line string) string {
+    return strings.Repeat(" ", len(original_line) - len(strings.TrimLeft(original_line, " ")))
+}
+
 func main() {
 
     log := log.New(os.Stderr, "", log.LstdFlags)
     log.Println("Log init")
 
-    dat, err := ioutil.ReadFile("/tmp/dat")
+    if len(os.Args) < 2 {
+        log.Printf("Found <%v> arguments (1 required)\n", len(os.Args) - 1)
+        log.Printf("USAGE: go run bash2zsh-complete BASH_COMPLETION_FILE [> ZSH_COMPLETION_FILE]\n")
+    }
+    dat, err := ioutil.ReadFile(os.Args[1])
     check(err)
 
     input := strings.Split(string(dat),"\n")
@@ -81,9 +89,15 @@ func main() {
 
     var output []string
     // ADD first line: #compdef cmdname _fname
-    compdef_line := "#compdef " + func_name + " " + cmd_name
+    var compdef_line string
+    if func_name[1:] == cmd_name {
+        compdef_line = "#compdef " + cmd_name
+    } else {
+        compdef_line = "#compdef " + func_name + " " + cmd_name
+    }
     log.Printf("Adding #compdef zsh directive <%v>\n", compdef_line)
     output = append(output, compdef_line)
+    output = append(output, "# bash2zsh This file was generated using bash2zsh-complete (https://github.com/curusarn/bash2zsh-complete)")
 
     // FIND: _fname() {
     log.Printf("Looking for <%v> function definition ...\n", func_name)
@@ -114,7 +128,7 @@ func main() {
     i++
 
     // POPULATE bash variables using zsh variables
-    // TODO: output = append(output, "# bash2zsh initialize bash variables \nbunch of shit\nmore shit")
+    output = append(output, "    # bash2zsh initialize bash variables \n    local COMP_WORDS COMP_CWORD\n    COMP_WORDS=($words[2,-1])\n    COMP_CWORD=$(($CURRENT-1))\n")
     log.Printf("Adding bash variable initialization at line <%v>\n", i)
 
     log.Printf("Processing file...\n")
@@ -151,9 +165,10 @@ func main() {
                     log.Printf("WARN: Cannot find wordlist quotes at <%v>\n", i)
                     wordlist = strings.Fields(wordlist_tmp)[0]
                 }
-                compadd_line := "compadd `echo " + wordlist + "`"
+                compadd_line := "compadd \"$@\" `echo " + wordlist + "`"
                 log.Printf("Replacing 'COMPREPLY' with 'compadd' - <%v> with <%v> at <%v>\n", trim_line, compadd_line, i)
-                line = "# bash2zsh replace COMPREPLY with compadd\n" + compadd_line + "\n#" + line 
+                indent := GetIndent(line)
+                line = indent + "# bash2zsh replace COMPREPLY with compadd\n" + indent + "#" + trim_line + "\n" + indent + compadd_line 
             }
         }
         output = append(output, line)
