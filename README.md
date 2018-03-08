@@ -5,9 +5,9 @@
 
 ### Usage
 
-`go run bash2zsh-complete.go BASH_COMPLETION [> ZSH_COMPLETION]`
-Program writes a lot of info to stderr.
-Program writes ZSH_COMPLETION to stdout.
+`go run bash2zsh-complete.go BASH_COMPLETION [> ZSH_COMPLETION]`  
+Program writes a lot of info to stderr.  
+Program writes ZSH_COMPLETION to stdout.  
 
 ### Disclaimer
 
