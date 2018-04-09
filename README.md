@@ -1,5 +1,9 @@
 # bash2zsh-complete
-~~Converts~~ Attempts to convert bash completion to zsh completion - much unstable, very alpha
+~~Converts~~ Attempts to convert bash completion to zsh completion.
+
+I have found out that it's nearly impossible to support all bash completion halper functions and therefore I'm **DEPRECATING** this project.
+
+I recommend checking out my other bash completion compatibility project which I'm actively using: https://github.com/curusarn/bash-complete-api
 
 ## Bash to Zsh complete
 
@@ -13,9 +17,4 @@ Program writes ZSH_COMPLETION to stdout.
 
 - This is very immature project
 - Your bash completion needs to be a zsh compatible script (http://slopjong.de/2012/07/02/compatibility-between-zsh-and-bash/)
-- This only works with a subset of standard bash completion options and functions (create an issue)
-
-### Issues
-
-I am more than happy to make this tool work for your bash completion script - create an issue.
-
+- This only works with a subset of standard bash completion options and functions
