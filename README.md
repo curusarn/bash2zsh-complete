@@ -1,7 +1,7 @@
 # bash2zsh-complete
 ~~Converts~~ Attempts to convert bash completion to zsh completion.
 
-I have found out that it's nearly impossible to support all bash completion halper functions and therefore I'm **DEPRECATING** this project.
+I have found out that it's nearly impossible to support all bash completion helper functions and therefore I'm **DEPRECATING** this project.
 
 I recommend checking out my other bash completion compatibility project which I'm actively using: https://github.com/curusarn/bash-complete-api
 
